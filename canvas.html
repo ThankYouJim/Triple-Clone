@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Set canvas size -->
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    
+    <!-- Javascript -->
+    <script src = "blocks.js"></script>
+    <script>
+    /* LOG
+     * 13 May: finished barebones of the block objects. The grid population works fine with brute force
+     * but will need to modified to fit to read index[].
+     *
+     */
+    
+// Global canvas variables
+var canvas = document.getElementById('canvas'),
+    ctx = canvas.getContext('2d'),
+    w = canvas.width = window.innerWidth,
+    h = canvas.height = window.innerHeight,
+    
+    // magic numbers
+    gridSize = 500,
+    // gridX = (w/2) - (gridSize/2),
+    gridX = 50,
+    gridY = 50,  // starting pixel of the grid
+    division = 5, // num of blocks per side
+    blockNum = gridSize/division,  // number of playable blocks on the game grid.
+    
+    end;
+
+function initCanvas() {
+  // var s = getComputedStyle(a);
+
+  // if(particles.length) {
+  //   particles = [];
+  //   cancelAnimationFrame(ANIMATION);
+  //   ANIMATION;
+  //   console.log(ANIMATION);
+  // }
+
+  // w = a.width = window.innerWidth;
+  // h = a.height = window.innerHeight;
+
+  // for(var i = 0; i < particleNum; i++) {
+  //   particles.push(new Particle(i));
+  // }
+
+  // drawScene();
+  // console.log(ANIMATION);
+  
+}
+
+//init
+(function() {
+  initCanvas();
+  
+  
+  ctx.fillStyle = 'pink';
+  ctx.fillRect(gridX,gridY,gridX+gridSize,gridY+gridSize);  // set game grid with 20px top and middle of screen always for now
+
+  // addEventListener('resize', initCanvas, false);
+})();
+
+    </script>
+  </body>
+</html>
