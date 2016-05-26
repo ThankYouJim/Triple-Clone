@@ -1,75 +1,117 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
+    <title>Triple Clone</title>
     <style>
-      body {
-        margin: 0px;
-        padding: 0px;
-      }
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /* Canvas for the pretty backgrounds*/
+        #bgCanvas {
+            position: absolute;
+            border: 2px dashed black;
+            z-index: 1;
+        }
+
+        /* Container of all game lots/store */
+        #gameCanvas {
+            position:absolute;
+            margin: 10px; /* Tempoary. Will set to center of canvas with width:50% */
+            border: 2px dashed green;
+            background-color: none;
+
+            z-index: 2;
+        }
+
+        .lots, #store {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .lots {
+            background-color: lawngreen;
+        }
+
+        #store {
+            background-color: gold;
+        }
+
     </style>
-  </head>
-  <body>
+</head>
+<body>
+    <!--<div id="map">
+        <div class="lots"></div>
+    </div>-->
+
+    <!-- Javascript containing block datas -->
+    <script src="blocks.js"></script>
+
     <!-- Set canvas size -->
-    <canvas id="canvas" width="1000" height="1000"></canvas>
-    
-    <!-- Javascript -->
-    <script src = "blocks.js"></script>
+    <div id="store"></div>
+    <canvas id="bgCanvas"></canvas>
+    <canvas id="gameCanvas"></canvas>
+
     <script>
-    /* LOG
-     * 13 May: finished barebones of the block objects. The grid population works fine with brute force
-     * but will need to modified to fit to read index[].
-     *
-     */
-    
-// Global canvas variables
-var canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d'),
-    w = canvas.width = window.innerWidth,
-    h = canvas.height = window.innerHeight,
-    
-    // magic numbers
-    gridSize = 500,
-    // gridX = (w/2) - (gridSize/2),
-    gridX = 50,
-    gridY = 50,  // starting pixel of the grid
-    division = 5, // num of blocks per side
-    blockNum = gridSize/division,  // number of playable blocks on the game grid.
-    
-    end;
+        // Global canvas variables
+        var bgCanvas = document.getElementById('bgCanvas');
+        bgCanvas.setAttribute('width', 800);
+        bgCanvas.setAttribute('height', 800);
+        var bgContext = bgCanvas.getContext('2d');
+        // Put some bg later maybe
 
-function initCanvas() {
-  // var s = getComputedStyle(a);
+        var gameCanvas = document.getElementById('gameCanvas');
+        gameCanvas.setAttribute('width', 600);
+        gameCanvas.setAttribute('height', 600);
+        var gameContext = gameCanvas.getContext('2d');
 
-  // if(particles.length) {
-  //   particles = [];
-  //   cancelAnimationFrame(ANIMATION);
-  //   ANIMATION;
-  //   console.log(ANIMATION);
-  // }
+        var map,
+            division = 6, // num of blocks per side
+            blockNum = gameCanvas.width / division,  // = 36: number of playable blocks on the game grid: 36
+            gameLots = [],	// array of blocks on the map
 
-  // w = a.width = window.innerWidth;
-  // h = a.height = window.innerHeight;
+            end;
 
-  // for(var i = 0; i < particleNum; i++) {
-  //   particles.push(new Particle(i));
-  // }
+        // Populate the LotBlocks
+        function populateLots() {
 
-  // drawScene();
-  // console.log(ANIMATION);
-  
-}
+            gameLots.push(new StoreBlock(blockNum, 0));
+            //gameLots[0].draw();
+            for (var i = 1; i < blockNum; i++) {
+                gameLots.push(new LotBlocks(blockNum, i));
+            }
 
-//init
-(function() {
-  initCanvas();
-  
-  
-  ctx.fillStyle = 'pink';
-  ctx.fillRect(gridX,gridY,gridX+gridSize,gridY+gridSize);  // set game grid with 20px top and middle of screen always for now
+            var ct = 0;
+            for (var j = 1; j <= division; j++) {
+                for (var i = 0; i < division; i++) {
+                    gameLots[ct].draw();
+                    gameContext.translate(blockNum, 0);
+                    ct++;
+                }
+                gameContext.setTransform(1, 0, 0, 1, 0, 0);  // reset context to default
+                gameContext.translate(0, blockNum * j);
+            }
 
-  // addEventListener('resize', initCanvas, false);
-})();
+            gameContext.endPath;
+        };
+
+        function initCanvas() {
+            populateLots();
+        }
+
+        // Init
+        (function () {
+            initCanvas();
+
+            // while game !lost, game();
+
+            //addEventListener('resize', initCanvas, false);
+        })();
 
     </script>
-  </body>
+</body>
 </html>
