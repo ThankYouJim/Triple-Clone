@@ -17,7 +17,7 @@
         }
 
         #gameCanvas {
-            margin: 20px;
+            /*margin: 20px;*/
             border: 2px dashed green;
             z-index: 2;
         }
@@ -37,7 +37,6 @@
     <canvas id="bgCanvas">
         Your browser does not support html5 canvas. Please try with another browser.
     </canvas>
-    <div id="score"></div>
     <canvas id="gameCanvas"></canvas>
 
     <script src="triple-clone-game.js"></script>
@@ -45,14 +44,14 @@
 
         // Global canvas variables
         var bgCanvas = document.getElementById('bgCanvas');
-        bgCanvas.setAttribute('width', 520);
+        bgCanvas.setAttribute('width', 600);
         bgCanvas.setAttribute('height', 600);
         var bgContext = bgCanvas.getContext('2d');
         // Put some bg later maybe
 
         var gameCanvas = document.getElementById('gameCanvas');
         gameCanvas.setAttribute('width', 480);
-        gameCanvas.setAttribute('height', 600);
+        gameCanvas.setAttribute('height', 480);
         var gameContext = gameCanvas.getContext('2d');
 
         // Image repository singleton. Holds all images needed in game
